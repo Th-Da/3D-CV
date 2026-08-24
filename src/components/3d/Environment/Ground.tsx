@@ -3,9 +3,8 @@ import {
   BLOCK_SIZE,
   GROUND_SURFACE_Y,
   groundTiles,
+  PLOT_RAISE,
 } from '../../../utils/sceneLayout'
-
-const PLOT_RAISE = 0.06
 
 export function Ground() {
   const blockY = GROUND_SURFACE_Y - BLOCK_HEIGHT / 2

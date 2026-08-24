@@ -20,6 +20,8 @@ export const PLATFORM_SIZE = 18
 export const BLOCK_SIZE = 1
 export const BLOCK_HEIGHT = 0.28
 export const GROUND_SURFACE_Y = BLOCK_HEIGHT
+/** Extra height for colored pads so stations sit on a visible step. */
+export const PLOT_RAISE = 0.06
 
 const BLOCK_MIN = -PLATFORM_SIZE / 2
 
@@ -133,6 +135,14 @@ function buildTiles(): GroundTile[] {
 
 export const districtPlots = buildPlots()
 export const groundTiles = buildTiles()
+
+export function getDistrictPlot(id: CvSectionId): DistrictPlot {
+  const plot = districtPlots.find((entry) => entry.id === id)
+  if (!plot) {
+    throw new Error(`Missing district plot for "${id}"`)
+  }
+  return plot
+}
 
 const plottedIds = new Set(districtPlots.map((plot) => plot.id))
 const missingPlot = cvSections.find((section) => !plottedIds.has(section.id))

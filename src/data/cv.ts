@@ -1,4 +1,4 @@
-import type {CvSection} from '../types/cv'
+import type {CvSection, CvSectionId} from '../types/cv'
 
 export const cvSections: CvSection[] = [
   {
@@ -32,3 +32,11 @@ export const cvSections: CvSection[] = [
     summary: 'How to reach me.',
   },
 ]
+
+export function getCvSection(id: CvSectionId): CvSection {
+  const section = cvSections.find((entry) => entry.id === id)
+  if (!section) {
+    throw new Error(`Missing CV section "${id}"`)
+  }
+  return section
+}
