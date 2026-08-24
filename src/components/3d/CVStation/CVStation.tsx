@@ -11,10 +11,11 @@ import {CVStationMarker} from './CVStationMarker'
 type CVStationProps = {
   plot: DistrictPlot
   selected: boolean
+  focused: boolean
   onSelect: (id: CvSectionId) => void
 }
 
-export function CVStation({plot, selected, onSelect}: CVStationProps) {
+export function CVStation({plot, selected, focused, onSelect}: CVStationProps) {
   function handleClick(event: ThreeEvent<MouseEvent>) {
     event.stopPropagation()
     onSelect(plot.id)
@@ -37,7 +38,7 @@ export function CVStation({plot, selected, onSelect}: CVStationProps) {
       <BlockMesh position={[1.02, 1.35, 0.2]} size={[0.12, 0.5, 0.5]} color="#7ec8e3" />
       <BlockMesh position={[0, 2.45, 0]} size={[2.4, 0.5, 2.4]} color={plot.color} />
       <BlockMesh position={[0.7, 2.95, -0.55]} size={[0.4, 0.7, 0.4]} color="#6b4f32" />
-      <CVStationMarker selected={selected} />
+      <CVStationMarker selected={selected} focused={focused} />
     </group>
   )
 }
