@@ -1,15 +1,27 @@
+/**
+ * Turns districtMap into world tiles and station footprints.
+ *
+ * The walkable surface is an 18×18 grid of 1×1 blocks. Cell coordinates use
+ * the southwest corner; the platform runs from -9 to +9 on X/Z.
+ */
 import {cvSections} from '../data/cv'
+import {
+  GRASS_COLORS,
+  PATH_COLORS,
+  PATH_RECTS,
+  PLOT_COLORS,
+  PLOT_RECTS,
+  type BlockRect,
+  type Vec2,
+} from '../components/3d/Environment/districtMap.ts'
 import type {CvSectionId} from '../types/cv'
 
 export const PLATFORM_SIZE = 18
-export const GROUND_SURFACE_Y = 0.06
+export const BLOCK_SIZE = 1
+export const BLOCK_HEIGHT = 0.28
+export const GROUND_SURFACE_Y = BLOCK_HEIGHT
 
-const MARGIN = 0.4
-const ROAD_WIDTH = 2.1
-const SIDEWALK_WIDTH = 0.22
-const FOOTPRINT_SCALE = 0.38
-
-type Vec2 = [number, number]
+const BLOCK_MIN = -PLATFORM_SIZE / 2
 
 export type DistrictPlot = {
   id: CvSectionId
@@ -19,78 +31,108 @@ export type DistrictPlot = {
   color: string
 }
 
-export type GroundRect = {
-  position: Vec2
-  size: Vec2
+export type GroundTile = {
+  key: string
+  x: number
+  z: number
+  color: string
+  kind: 'grass' | 'path' | 'plot'
 }
 
-const PLOT_COLORS: Record<CvSectionId, string> = {
-  experience: '#6d8fd4',
-  education: '#d2b36a',
-  skills: '#d4896a',
-  about: '#7dba6f',
-  projects: '#6f9e8c',
-  contact: '#8a7bb8',
+function cellKey(x: number, z: number) {
+  return `${x},${z}`
 }
 
-const GRID_IDS: CvSectionId[][] = [
-  ['experience', 'education'],
-  ['skills', 'about'],
-  ['projects', 'contact'],
-]
-
-function centerOf(start: number, length: number) {
-  return start + length / 2
+function forEachCell(rect: BlockRect, visit: (x: number, z: number) => void) {
+  for (let z = 0; z < rect.size[1]; z += 1) {
+    for (let x = 0; x < rect.size[0]; x += 1) {
+      visit(rect.origin[0] + x, rect.origin[1] + z)
+    }
+  }
 }
 
-function buildLayout() {
-  const innerMin = -PLATFORM_SIZE / 2 + MARGIN
-  const innerSize = PLATFORM_SIZE - MARGIN * 2
-  const columnWidth = (innerSize - ROAD_WIDTH) / 2
-  const rowDepth = (innerSize - ROAD_WIDTH * 2) / 3
-  const leftStart = innerMin
-  const rightStart = innerMin + columnWidth + ROAD_WIDTH
-  const columnStarts = [leftStart, rightStart]
-  const rowStarts = [0, 1, 2].map(
-    (rowIndex) => innerMin + rowIndex * (rowDepth + ROAD_WIDTH),
-  )
-
-  const plots: DistrictPlot[] = GRID_IDS.flatMap((row, rowIndex) =>
-    row.map((id, columnIndex) => {
-      const width = columnWidth
-      const depth = rowDepth
-      const xStart = columnStarts[columnIndex]
-      const zStart = rowStarts[rowIndex]
-
-      return {
-        id,
-        position: [centerOf(xStart, width), centerOf(zStart, depth)],
-        size: [width, depth],
-        footprint: [width * FOOTPRINT_SCALE, depth * FOOTPRINT_SCALE],
-        color: PLOT_COLORS[id],
-      }
-    }),
-  )
-
-  const roads: GroundRect[] = [
-    {
-      position: [0, centerOf(innerMin, innerSize)],
-      size: [ROAD_WIDTH, innerSize],
-    },
-    {
-      position: [centerOf(innerMin, innerSize), rowStarts[1] - ROAD_WIDTH / 2],
-      size: [innerSize, ROAD_WIDTH],
-    },
-    {
-      position: [centerOf(innerMin, innerSize), rowStarts[2] - ROAD_WIDTH / 2],
-      size: [innerSize, ROAD_WIDTH],
-    },
-  ]
-
-  return {plots, roads, sidewalkWidth: SIDEWALK_WIDTH}
+function blockCenter(origin: number, size: number) {
+  return origin + size / 2
 }
 
-export const {plots: districtPlots, roads, sidewalkWidth} = buildLayout()
+function hashTone(x: number, z: number, palette: string[]) {
+  const index = Math.abs(x * 13 + z * 7) % palette.length
+  return palette[index]
+}
+
+function tileAt(
+  cellX: number,
+  cellZ: number,
+  plotByCell: Map<string, CvSectionId>,
+  pathCells: Set<string>,
+): GroundTile {
+  const key = cellKey(cellX, cellZ)
+  const plotId = plotByCell.get(key)
+
+  let color = hashTone(cellX, cellZ, GRASS_COLORS)
+  let kind: GroundTile['kind'] = 'grass'
+  if (plotId) {
+    color = PLOT_COLORS[plotId]
+    kind = 'plot'
+  } else if (pathCells.has(key)) {
+    color = hashTone(cellX, cellZ, PATH_COLORS)
+    kind = 'path'
+  }
+
+  return {
+    key,
+    x: cellX + BLOCK_SIZE / 2,
+    z: cellZ + BLOCK_SIZE / 2,
+    color,
+    kind,
+  }
+}
+
+function buildPlots(): DistrictPlot[] {
+  return PLOT_RECTS.map((plot) => {
+    const footprint: Vec2 = [...plot.size]
+
+    return {
+      id: plot.id,
+      position: [
+        blockCenter(plot.origin[0], plot.size[0]),
+        blockCenter(plot.origin[1], plot.size[1]),
+      ],
+      size: footprint,
+      footprint,
+      color: PLOT_COLORS[plot.id],
+    }
+  })
+}
+
+function buildTiles(): GroundTile[] {
+  const plotByCell = new Map<string, CvSectionId>()
+  const pathCells = new Set<string>()
+
+  for (const plot of PLOT_RECTS) {
+    forEachCell(plot, (x, z) => {
+      plotByCell.set(cellKey(x, z), plot.id)
+    })
+  }
+
+  for (const path of PATH_RECTS) {
+    forEachCell(path, (x, z) => {
+      pathCells.add(cellKey(x, z))
+    })
+  }
+
+  const tiles: GroundTile[] = []
+  for (let z = 0; z < PLATFORM_SIZE; z += 1) {
+    for (let x = 0; x < PLATFORM_SIZE; x += 1) {
+      tiles.push(tileAt(BLOCK_MIN + x, BLOCK_MIN + z, plotByCell, pathCells))
+    }
+  }
+
+  return tiles
+}
+
+export const districtPlots = buildPlots()
+export const groundTiles = buildTiles()
 
 const plottedIds = new Set(districtPlots.map((plot) => plot.id))
 const missingPlot = cvSections.find((section) => !plottedIds.has(section.id))

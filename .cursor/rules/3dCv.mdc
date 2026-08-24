@@ -4,7 +4,7 @@ description: Core architecture, maintainability, and step-by-step development ru
 alwaysApply: true
 -----------------
 
-# Create a low-poly 3D city Diorama that represents my CV and career journey. The user explores the city Diorama and visits different locations, with each building representing a CV section - for example About Me, Experience, Education, Skills, Projects, and Contact. Approaching or interacting with a location opens a clean 2D information panel containing the relevant CV content. The style should be modern, minimal, professional, and visually appealing, while keeping the low-poly aesthetic consistent throughout.
+# Create a low-poly 3D city Diorama in minecraft style that represents my CV and career journey. The user explores the city Diorama and visits different locations, with each building representing a CV section - for example About Me, Experience, Education, Skills, Projects, and Contact. Approaching or interacting with a location opens a clean 2D information panel containing the relevant CV content. The style should be modern, minimal, professional, and visually appealing, while keeping the low-poly aesthetic consistent throughout.
 
 # The user moves with WASD and interacts with locations using Enter or the mouse. Mouse interaction means click to move and click to open.
 

@@ -21,7 +21,7 @@ export function DioramaBase() {
       {/* Platform: walkable top surface where the city and stations will sit */}
       <mesh position={[0, 0.02, 0]} receiveShadow>
         <boxGeometry args={[PLATFORM_SIZE, 0.04, PLATFORM_SIZE]} />
-        <meshStandardMaterial color="#5f6a63" roughness={0.9} />
+        <meshStandardMaterial color="#6b4f32" roughness={0.95} />
       </mesh>
 
       {/* Front rim (+Z): outer border strip along the plinth */}
