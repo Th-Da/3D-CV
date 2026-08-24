@@ -4,7 +4,11 @@ description: Core architecture, maintainability, and step-by-step development ru
 alwaysApply: true
 -----------------
 
-# 3D CV Project – Core Development Rules
+# Create a low-poly 3D city Diorama that represents my CV and career journey. The user explores the city Diorama and visits different locations, with each building representing a CV section - for example About Me, Experience, Education, Skills, Projects, and Contact. Approaching or interacting with a location opens a clean 2D information panel containing the relevant CV content. The style should be modern, minimal, professional, and visually appealing, while keeping the low-poly aesthetic consistent throughout.
+
+# The user moves with WASD and interacts with locations using Enter or the mouse. Mouse interaction means click to move and click to open.
+
+# 3D CV Website with threejs and Fiber – Core Development Rules
 
 ## Goal
 
@@ -19,11 +23,49 @@ Stack:
 * Three.js
 * Drei
 * React Compiler
-* Oxlint
+* ESLint
 
 Architecture:
 
 CV Data → Application Logic → 3D Scene → UI
+
+Use the following project structure:
+
+```text
+src/
+├── components/
+│   ├── 3d/
+│   │   ├── Player/
+│   │   ├── Environment/
+│   │   ├── CVStation/
+│   │   └── ...
+│   ├── ui/
+│   │   ├── InfoCard/
+│   │   ├── Navigation/
+│   │   └── ...
+│   └── shared/
+├── scenes/
+│   └── CVScene/
+├── data/
+│   └── cv.ts
+├── hooks/
+├── utils/
+├── types/
+├── assets/
+├── App.tsx
+└── main.tsx
+```
+
+Architecture ownership:
+
+* `data/cv.ts` contains structured CV content only, not JSX.
+* `types/` defines shared data and component contracts.
+* `hooks/` contains reusable state and behavior such as movement, interaction, and active section state.
+* `components/3d/` contains reusable 3D world pieces and interaction targets.
+* `scenes/CVScene/` composes the full 3D city Diorama scene from reusable 3D components.
+* `components/ui/` contains readable 2D panels and navigation UI for CV content.
+* `App.tsx` wires the 3D scene and top-level UI together.
+* Keep readable CV text in UI components and keep 3D scene components focused on world rendering and interaction.
 
 ---
 
@@ -112,7 +154,7 @@ For each step:
 2. Implement only that step.
 3. Check that the implementation is correct.
 4. Check for TypeScript/lint/build errors when appropriate.
-5. Continue with the next step.
+5.  after one step is done, pause and ask for review. dont implent all by your own. make me understand what and wyh
 
 Do not make several unrelated architectural changes in one step.
 

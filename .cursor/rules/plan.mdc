@@ -1,0 +1,153 @@
+---
+description: Step-by-step implementation order for the 3D CV city diorama
+alwaysApply: true
+---
+
+# 3D CV City Diorama Implementation Plan
+
+Use this rule together with `3dCv.mdc`. Build the project in small reviewable slices, and stop after each step for user review before continuing.
+
+## Working Rhythm
+
+For every step:
+1. Explain what will change and why.
+2. Implement only that slice.
+3. Run the smallest useful validation.
+4. Pause for review before moving on.
+
+## Build Order
+
+### 1. Scene Shell And App Wiring
+Files:
+- `src/App.tsx`
+- `src/scenes/CVScene/CVScene.tsx`
+- `src/components/shared/SceneCanvas.tsx`
+
+Substeps:
+1. Create the target folder structure for `components/3d`, `components/ui`, `components/shared`, `scenes`, `data`, `hooks`, `utils`, and `types`.
+2. Extract canvas setup into `SceneCanvas`.
+3. Let `App.tsx` mount `CVScene` and own only top-level wiring.
+4. Keep the first render minimal: camera, lights, placeholder ground.
+
+### 2. Diorama Base And Surrounding Frame
+Files:
+- `src/components/3d/Environment/DioramaBase.tsx`
+- `src/components/3d/Environment/SceneLighting.tsx`
+- `src/scenes/CVScene/CVScene.tsx`
+
+Substeps:
+1. Add the base platform or plinth.
+2. Add the outer border or rim.
+3. Tune ambient, directional, and accent lighting.
+4. Add shadows only if they improve readability.
+
+### 3. Ground Layout And District Map
+Files:
+- `src/data/cv.ts`
+- `src/types/cv.ts`
+- `src/components/3d/Environment/Ground.tsx`
+- `src/utils/sceneLayout.ts`
+
+Substeps:
+1. Define typed CV section data.
+2. Define layout positions and footprints for each section.
+3. Build roads, plots, sidewalks, and optional green or water accents.
+4. Keep geometry primitive and reusable.
+
+### 4. First Landmark/Building: One Complete CV Station
+Files:
+- `src/components/3d/CVStation/CVStation.tsx`
+- `src/components/3d/CVStation/CVStationMarker.tsx`
+- `src/components/ui/InfoCard/InfoCard.tsx`
+- `src/App.tsx`
+
+Substeps:
+1. Build a reusable station component.
+2. Implement one first station, preferably `About Me`.
+3. Add active-section state wiring.
+4. Open a basic 2D info card for that station.
+
+### 5. Player Movement And Camera Behavior
+Files:
+- `src/components/3d/Player/PlayerController.tsx`
+- `src/hooks/usePlayerMovement.ts`
+- `src/hooks/useInteractionTarget.ts`
+- `src/scenes/CVScene/CVScene.tsx`
+
+Substeps:
+1. Add WASD movement.
+2. Constrain movement to the diorama surface.
+3. Detect the nearest interactive station.
+4. Support Enter to open the focused station.
+
+### 6. Mouse Navigation And Click Interaction
+Files:
+- `src/hooks/usePointerNavigation.ts`
+- `src/components/3d/Player/ClickToMoveTarget.tsx`
+- `src/components/3d/CVStation/CVStation.tsx`
+
+Substeps:
+1. Add click-to-move ground picking.
+2. Allow click-to-open when near a station.
+3. Keep mouse and keyboard interaction rules explicit.
+
+### 7. Shared UI Layer And Navigation Hints
+Files:
+- `src/components/ui/InfoCard/InfoCard.tsx`
+- `src/components/ui/Navigation/NavigationHints.tsx`
+- `src/components/ui/Navigation/SectionList.tsx`
+- `src/App.tsx`
+
+Substeps:
+1. Expand the info card to render any CV section.
+2. Add simple control hints.
+3. Add a lightweight section list only if it improves orientation.
+4. Keep readable CV content in UI, not in 3D meshes.
+
+### 8. Duplicate The Station Pattern Across The City
+Files:
+- `src/data/cv.ts`
+- `src/utils/sceneLayout.ts`
+- `src/components/3d/CVStation/CVStation.tsx`
+
+Substeps:
+1. Add `experience`, `education`, `skills`, `projects`, and `contact`.
+2. Vary silhouettes and accents while keeping one station API.
+3. Split into specialized variants only if the shared station becomes too complex.
+
+### 9. Environment Polish Pass
+Files:
+- `src/components/3d/Environment/Decor.tsx`
+- `src/components/3d/Environment/SceneLighting.tsx`
+- `src/scenes/CVScene/CVScene.tsx`
+
+Substeps:
+1. Add small props such as trees, benches, lamps, or signage.
+2. Improve lighting, fog, and shadows conservatively.
+3. Add subtle motion only where it supports readability.
+
+### 10. Final Integration And Stability Pass
+Files:
+- `src/App.tsx`
+- `src/scenes/CVScene/CVScene.tsx`
+- related hooks, types, and UI files touched earlier
+
+Substeps:
+1. Check naming and folder consistency against `3dCv.mdc`.
+2. Remove temporary shortcuts.
+3. Run lint and build validation after each slice and again at the end.
+4. Track remaining visual or content TODOs separately from the core architecture.
+
+## Dependency Flow
+
+`CV data -> app state and hooks -> CV scene -> 3D stations`
+
+`App state and hooks -> UI panels and navigation`
+
+## First Implementation Slice
+
+Start with Step 1 only:
+- create the folder skeleton
+- extract `SceneCanvas`
+- add `CVScene`
+- keep the render to camera, light, and placeholder ground
