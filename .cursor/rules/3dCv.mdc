@@ -1,0 +1,169 @@
+---
+
+description: Core architecture, maintainability, and step-by-step development rules for the 3D CV project
+alwaysApply: true
+-----------------
+
+# 3D CV Project – Core Development Rules
+
+## Goal
+
+Keep the project clean, modular, maintainable, understandable, and easy to extend.
+
+Stack:
+
+* Vite
+* React
+* TypeScript
+* React Three Fiber
+* Three.js
+* Drei
+* React Compiler
+* Oxlint
+
+Architecture:
+
+CV Data → Application Logic → 3D Scene → UI
+
+---
+
+## 1. Understand Before Changing
+
+Before writing code:
+
+1. Inspect the existing project structure.
+2. Find related components, hooks, utilities, types, and data.
+3. Understand how the existing implementation works.
+4. Decide where the change belongs.
+5. Reuse existing code when appropriate.
+
+Do not start coding immediately when the existing architecture has not been understood.
+
+---
+
+## 2. One Responsibility Per Module
+
+Keep responsibilities separated:
+
+* `data/` → CV content and structured data
+* `components/3d/` → 3D/R3F components
+* `components/ui/` → HTML/UI components
+* `scenes/` → composition of 3D scenes
+* `hooks/` → reusable behavior and state logic
+* `utils/` → focused reusable utilities
+* `types/` → shared TypeScript types
+
+Do not put CV data, application logic, 3D rendering, UI, navigation, and animation into one component.
+
+If a component becomes difficult to understand, split it into smaller focused parts.
+
+---
+
+## 3. Keep Data Separate From Rendering
+
+CV content belongs in structured data, not scattered throughout JSX.
+
+Prefer:
+
+CV Data → typed data → components
+
+Avoid hardcoding the same content in multiple components.
+
+Use TypeScript types for shared data structures and component interfaces.
+
+Avoid `any` unless there is a specific technical reason.
+
+---
+
+## 4. Prefer Simple, Explicit Code
+
+Write code that another developer can understand quickly.
+
+Prefer:
+
+* Clear names
+* Small components
+* Straightforward control flow
+* Existing project patterns
+* Reuse over duplication
+
+Avoid:
+
+* Clever abstractions
+* Premature generalization
+* Unnecessary design patterns
+* Large monolithic components
+* Unnecessary dependencies
+* Duplicate implementations
+
+Do not optimize or abstract code without a concrete reason.
+
+---
+
+## 5. Implement Step by Step
+
+Do NOT implement a large feature all at once.
+
+Break larger tasks into small, logical steps.
+
+For each step:
+
+1. State briefly what will be changed.
+2. Implement only that step.
+3. Check that the implementation is correct.
+4. Check for TypeScript/lint/build errors when appropriate.
+5. Continue with the next step.
+
+Do not make several unrelated architectural changes in one step.
+
+Keep each change small enough that it is easy to review and understand.
+
+---
+
+## 6. Do Not Make Unrelated Changes
+
+When implementing a feature:
+
+* Change only what is necessary.
+* Do not rewrite working code without a reason.
+* Do not reorganize the entire project.
+* Do not introduce new architecture unnecessarily.
+* Do not refactor unrelated components.
+
+If a broader refactoring is genuinely necessary, explain why before doing it.
+
+---
+
+## 7. Explain Architectural Decisions
+
+When there are multiple reasonable approaches, briefly explain the relevant trade-off before implementing the more significant one.
+
+For larger changes, identify:
+
+* Which files will change
+* Which files are new
+* Why they are needed
+* How they fit into the existing architecture
+
+Prefer the smallest solution that keeps the architecture clean.
+
+---
+
+## 8. Keep the Codebase Consistent
+
+Follow existing conventions for:
+
+* File structure
+* Naming
+* Components
+* Hooks
+* State management
+* Styling
+* TypeScript
+* R3F/Three.js
+
+Do not introduce a new pattern when an established project pattern already solves the problem.
+
+The goal is not the most sophisticated architecture.
+
+The goal is a codebase that is easy to understand, maintain, and extend.
