@@ -1,14 +1,14 @@
-export function CVScene() {
-    return (
-        <>
-            <color attach="background" args={["#d7e3f4"]}/>
-            <ambientLight intensity={1.1}/>
-            <directionalLight position={[6, 10, 5]} intensity={1.4}/>
+import {DioramaBase} from '../../components/3d/Environment/DioramaBase'
+import {Ground} from '../../components/3d/Environment/Ground'
+import {SceneLighting} from '../../components/3d/Environment/SceneLighting'
 
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]}>
-                <planeGeometry args={[18, 18]}/>
-                <meshStandardMaterial color="#8bcf7a"/>
-            </mesh>
-        </>
-    )
+export function CVScene() {
+  return (
+    <>
+      <color attach="background" args={['#cfd8e6']} />
+      <SceneLighting />
+      <DioramaBase />
+      <Ground />
+    </>
+  )
 }

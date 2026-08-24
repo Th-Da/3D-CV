@@ -1,13 +1,12 @@
 import {Canvas} from '@react-three/fiber'
 import type {PropsWithChildren} from 'react'
 
-type SceneCanvasProps = PropsWithChildren
 
-export function SceneCanvas({children}: SceneCanvasProps) {
+export function SceneCanvas({children}: PropsWithChildren) {
     return (
         <Canvas
-            camera={{position: [8, 7, 8], fov: 45}}
-            shadows={false}
+            camera={{position: [8, 7, 8], fov: 65}}
+            shadows
             dpr={[1, 2]}
         >
             {children}
