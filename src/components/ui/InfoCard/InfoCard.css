@@ -2,7 +2,7 @@
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  z-index: 2;
+  z-index: 3;
   width: min(22rem, calc(100vw - 2rem));
   padding: 1.15rem 1.25rem 1.3rem;
   border: 1px solid #d5dde8;

@@ -5,7 +5,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  # Deploy the current branch without merging to main (useful for phone testing).
   workflow_dispatch:
 
 permissions:
