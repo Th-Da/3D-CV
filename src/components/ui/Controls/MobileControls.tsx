@@ -1,19 +1,15 @@
 import {useEffect, useState} from 'react'
-import {TouchCameraPad} from './TouchCameraPad'
+import {useTouchCameraInput} from '../../../hooks/input/useTouchCameraInput'
+import {prefersTouchControls} from '../../../utils/touchDevice'
 import {VirtualJoystick} from './VirtualJoystick'
 
-function prefersTouchControls() {
-  if (typeof window === 'undefined') {
-    return false
-  }
-  return window.matchMedia('(hover: none), (pointer: coarse)').matches
-}
-
 /**
- * Mobile control layer over the canvas: joystick (move) + swipe pad (look).
+ * Mobile control layer: joystick (move) + window-level camera swipe.
+ * Does not overlay the canvas so station taps still reach the 3D scene.
  */
 export function MobileControls() {
   const [enabled, setEnabled] = useState(prefersTouchControls)
+  useTouchCameraInput(enabled)
 
   useEffect(() => {
     const media = window.matchMedia('(hover: none), (pointer: coarse)')
@@ -31,7 +27,6 @@ export function MobileControls() {
 
   return (
     <div className="mobile-controls">
-      <TouchCameraPad />
       <VirtualJoystick />
     </div>
   )

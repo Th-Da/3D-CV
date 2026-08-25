@@ -4,6 +4,7 @@ import {SceneCanvas} from './components/shared/SceneCanvas'
 import {KeyboardInputBridge} from './components/ui/Controls/KeyboardInputBridge'
 import {MobileControls} from './components/ui/Controls/MobileControls'
 import {InfoCard} from './components/ui/InfoCard/InfoCard'
+import {StationOpenPrompt} from './components/ui/Navigation/StationOpenPrompt'
 import {getCvSection} from './data/cv'
 import {CVScene} from './scenes/CVScene/CVScene'
 import type {CvSectionId} from './types/cv'
@@ -42,6 +43,11 @@ function App() {
         />
       </SceneCanvas>
       <MobileControls />
+      <StationOpenPrompt
+        focusedSectionId={focusedSectionId}
+        activeSectionId={activeSectionId}
+        onOpen={setActiveSectionId}
+      />
       {activeSection ? (
         <InfoCard
           section={activeSection}
