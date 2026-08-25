@@ -1,0 +1,29 @@
+.station-open-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: max(1.35rem, env(safe-area-inset-bottom));
+  z-index: 3;
+  transform: translateX(-50%);
+  padding: 0.65rem 1.35rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 24px rgba(28, 39, 54, 0.2);
+  color: #1d2733;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.station-open-prompt:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+@media (min-width: 480px) {
+  .station-open-prompt {
+    bottom: max(1.75rem, env(safe-area-inset-bottom));
+  }
+}
