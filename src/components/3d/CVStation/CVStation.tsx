@@ -16,7 +16,7 @@ type CVStationProps = {
 }
 
 export function CVStation({plot, selected, focused, onSelect}: CVStationProps) {
-  function handleClick(event: ThreeEvent<MouseEvent>) {
+  function handleSelect(event: ThreeEvent<PointerEvent>) {
     event.stopPropagation()
     onSelect(plot.id)
   }
@@ -24,7 +24,7 @@ export function CVStation({plot, selected, focused, onSelect}: CVStationProps) {
   return (
     <group
       position={[plot.position[0], GROUND_SURFACE_Y + PLOT_RAISE, plot.position[1]]}
-      onClick={handleClick}
+      onClick={handleSelect}
       onPointerOver={() => {
         document.body.style.cursor = 'pointer'
       }}
