@@ -80,7 +80,8 @@ Substeps:
 3. Detect the nearest interactive station.
 4. Support Enter to open the focused station.
 
-### 6. Mouse Navigation And Click Interaction
+### 6. SKIP THIS STEP FOR NOW!
+Mouse Navigation And Click Interaction
 Files:
 - `src/hooks/usePointerNavigation.ts`
 - `src/components/3d/Player/ClickToMoveTarget.tsx`

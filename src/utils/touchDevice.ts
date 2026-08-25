@@ -19,7 +19,7 @@ export function isTouchUiTarget(target: EventTarget | null) {
   }
   return Boolean(
     target.closest(
-      'button, a, .info-card, .virtual-joystick, .station-open-prompt',
+      'button, a, .info-card, .virtual-joystick, .station-open-prompt, .navigation-hints',
     ),
   )
 }

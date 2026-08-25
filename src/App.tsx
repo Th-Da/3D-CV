@@ -4,6 +4,7 @@ import {SceneCanvas} from './components/shared/SceneCanvas'
 import {KeyboardInputBridge} from './components/ui/Controls/KeyboardInputBridge'
 import {MobileControls} from './components/ui/Controls/MobileControls'
 import {InfoCard} from './components/ui/InfoCard/InfoCard'
+import {NavigationHints} from './components/ui/Navigation/NavigationHints'
 import {StationOpenPrompt} from './components/ui/Navigation/StationOpenPrompt'
 import {getCvSection} from './data/cv'
 import {CVScene} from './scenes/CVScene/CVScene'
@@ -16,10 +17,20 @@ function App() {
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      if (event.repeat) {
+        return
+      }
+
+      if (event.code === 'Escape' && activeSectionId) {
+        event.preventDefault()
+        setActiveSectionId(null)
+        return
+      }
+
       if (event.code !== 'Enter' && event.code !== 'NumpadEnter') {
         return
       }
-      if (event.repeat || activeSectionId || !focusedSectionId) {
+      if (activeSectionId || !focusedSectionId) {
         return
       }
 
@@ -43,6 +54,10 @@ function App() {
         />
       </SceneCanvas>
       <MobileControls />
+      <NavigationHints
+        focusedSectionId={focusedSectionId}
+        activeSectionId={activeSectionId}
+      />
       <StationOpenPrompt
         focusedSectionId={focusedSectionId}
         activeSectionId={activeSectionId}
