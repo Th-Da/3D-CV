@@ -2,7 +2,6 @@ import type {ThreeEvent} from '@react-three/fiber'
 import type {CvSectionId} from '../../../types/cv'
 import {
   GROUND_SURFACE_Y,
-  PLOT_RAISE,
   type DistrictPlot,
 } from '../../../utils/sceneLayout'
 import {CVStationMarker} from './CVStationMarker'
@@ -24,7 +23,7 @@ export function CVStation({plot, selected, focused, onSelect}: CVStationProps) {
 
   return (
     <group
-      position={[plot.position[0], GROUND_SURFACE_Y + PLOT_RAISE, plot.position[1]]}
+      position={[plot.position[0], GROUND_SURFACE_Y, plot.position[1]]}
       rotation={[0, STATION_YAW[plot.id], 0]}
       onClick={handleSelect}
       onPointerOver={() => {

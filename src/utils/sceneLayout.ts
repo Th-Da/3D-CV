@@ -20,8 +20,6 @@ export const PLATFORM_SIZE = 18
 export const BLOCK_SIZE = 1
 export const BLOCK_HEIGHT = 0.28
 export const GROUND_SURFACE_Y = BLOCK_HEIGHT
-/** Extra height for colored pads so stations sit on a visible step. */
-export const PLOT_RAISE = 0.06
 
 const BLOCK_MIN = -PLATFORM_SIZE / 2
 
@@ -38,7 +36,7 @@ export type GroundTile = {
   x: number
   z: number
   color: string
-  kind: 'grass' | 'path' | 'plot'
+  kind: 'grass' | 'path'
 }
 
 function cellKey(x: number, z: number) {
@@ -74,8 +72,9 @@ function tileAt(
   let color = hashTone(cellX, cellZ, GRASS_COLORS)
   let kind: GroundTile['kind'] = 'grass'
   if (plotId) {
-    color = PLOT_COLORS[plotId]
-    kind = 'plot'
+    // Keep plot footprints as grass so buildings sit on the same ground.
+    color = hashTone(cellX, cellZ, GRASS_COLORS)
+    kind = 'grass'
   } else if (pathCells.has(key)) {
     color = hashTone(cellX, cellZ, PATH_COLORS)
     kind = 'path'

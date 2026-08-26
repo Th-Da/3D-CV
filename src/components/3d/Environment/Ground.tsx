@@ -3,7 +3,6 @@ import {
   BLOCK_SIZE,
   GROUND_SURFACE_Y,
   groundTiles,
-  PLOT_RAISE,
 } from '../../../utils/sceneLayout'
 
 export function Ground() {
@@ -11,18 +10,12 @@ export function Ground() {
 
   return (
     <group>
-      {groundTiles.map((tile) => {
-        const raised = tile.kind === 'plot'
-        const height = raised ? BLOCK_HEIGHT + PLOT_RAISE : BLOCK_HEIGHT
-        const y = raised ? blockY + PLOT_RAISE / 2 : blockY
-
-        return (
-          <mesh key={tile.key} position={[tile.x, y, tile.z]} receiveShadow castShadow={raised}>
-            <boxGeometry args={[BLOCK_SIZE, height, BLOCK_SIZE]} />
-            <meshStandardMaterial color={tile.color} roughness={0.95} />
-          </mesh>
-        )
-      })}
+      {groundTiles.map((tile) => (
+        <mesh key={tile.key} position={[tile.x, blockY, tile.z]} receiveShadow>
+          <boxGeometry args={[BLOCK_SIZE, BLOCK_HEIGHT, BLOCK_SIZE]} />
+          <meshStandardMaterial color={tile.color} roughness={0.95} />
+        </mesh>
+      ))}
     </group>
   )
 }

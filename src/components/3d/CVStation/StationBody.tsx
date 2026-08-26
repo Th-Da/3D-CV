@@ -28,6 +28,6 @@ export function StationBody({id, accent}: StationBodyProps) {
     case 'projects':
       return <ProjectsStudio accent={accent} />
     case 'contact':
-      return <ContactPost accent={accent} />
+      return <ContactPost />
   }
 }

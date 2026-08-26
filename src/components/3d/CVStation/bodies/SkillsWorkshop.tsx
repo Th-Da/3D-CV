@@ -29,10 +29,10 @@ export function SkillsWorkshop({accent}: SkillsWorkshopProps) {
       <BlockMesh position={[1.05, 0.95, -0.85]} size={[0.22, 1.9, 0.22]} color={woodDark} />
       {/* Stepped A-frame roof */}
       <BlockMesh position={[0, 1.95, 0]} size={[2.5, 0.22, 2.15]} color={slate} />
-      <BlockMesh position={[0, 2.25, 0]} size={[2.0, 0.22, 2.15]} color={slate} />
-      <BlockMesh position={[0, 2.55, 0]} size={[1.45, 0.22, 2.15]} color={slate} />
-      <BlockMesh position={[0, 2.85, 0]} size={[0.9, 0.22, 2.15]} color={slate} />
-      <BlockMesh position={[0, 3.1, 0]} size={[0.4, 0.2, 2.15]} color={accent} />
+      <BlockMesh position={[0, 2.17, 0]} size={[2.0, 0.22, 2.15]} color={slate} />
+      <BlockMesh position={[0, 2.39, 0]} size={[1.45, 0.22, 2.15]} color={slate} />
+      <BlockMesh position={[0, 2.61, 0]} size={[0.9, 0.22, 2.15]} color={slate} />
+      <BlockMesh position={[0, 2.82, 0]} size={[0.4, 0.2, 2.15]} color={accent} />
       {/* Wood eaves */}
       <BlockMesh position={[0, 1.88, 1.05]} size={[2.55, 0.12, 0.18]} color={wood} />
       <BlockMesh position={[0, 1.88, -1.05]} size={[2.55, 0.12, 0.18]} color={wood} />

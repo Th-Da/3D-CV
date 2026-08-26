@@ -4,8 +4,8 @@ import type {CvSectionId} from '../../../types/cv'
 export const STATION_MARKER_Y: Record<CvSectionId, number> = {
   about: 3.85,
   experience: 5.3,
-  education: 4.95,
-  skills: 3.6,
+  education: 4.75,
+  skills: 3.35,
   projects: 3.5,
   contact: 2.3,
 }

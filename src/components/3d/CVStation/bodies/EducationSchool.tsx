@@ -50,8 +50,8 @@ export function EducationSchool({accent}: EducationSchoolProps) {
       <BlockMesh position={[1.05, 2.4, 0]} size={[1.3, 0.22, 1.9]} color={trim} />
       {/* Central gable roof (stepped peak) */}
       <BlockMesh position={[0, 2.95, 0.1]} size={[1.2, 0.25, 1.75]} color={trim} />
-      <BlockMesh position={[0, 3.25, 0.1]} size={[0.85, 0.25, 1.75]} color={trim} />
-      <BlockMesh position={[0, 3.55, 0.1]} size={[0.5, 0.25, 1.75]} color={accent} />
+      <BlockMesh position={[0, 3.2, 0.1]} size={[0.85, 0.25, 1.75]} color={trim} />
+      <BlockMesh position={[0, 3.45, 0.1]} size={[0.5, 0.25, 1.75]} color={accent} />
       {/* Clock face */}
       <BlockMesh position={[0, 2.55, 0.9]} size={[0.55, 0.55, 0.1]} color={trim} />
       <BlockMesh position={[0, 2.55, 0.97]} size={[0.12, 0.12, 0.08]} color="#3a4450" />
