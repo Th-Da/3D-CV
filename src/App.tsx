@@ -1,8 +1,9 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import './App.css'
 import {SceneCanvas} from './components/shared/SceneCanvas'
 import {KeyboardInputBridge} from './components/ui/Controls/KeyboardInputBridge'
 import {MobileControls} from './components/ui/Controls/MobileControls'
+import {SectionKeyboardBridge} from './components/ui/Controls/SectionKeyboardBridge'
 import {InfoCard} from './components/ui/InfoCard/InfoCard'
 import {NavigationHints} from './components/ui/Navigation/NavigationHints'
 import {StationOpenPrompt} from './components/ui/Navigation/StationOpenPrompt'
@@ -15,36 +16,15 @@ function App() {
   const [focusedSectionId, setFocusedSectionId] = useState<CvSectionId | null>(null)
   const activeSection = activeSectionId ? getCvSection(activeSectionId) : null
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.repeat) {
-        return
-      }
-
-      if (event.code === 'Escape' && activeSectionId) {
-        event.preventDefault()
-        setActiveSectionId(null)
-        return
-      }
-
-      if (event.code !== 'Enter' && event.code !== 'NumpadEnter') {
-        return
-      }
-      if (activeSectionId || !focusedSectionId) {
-        return
-      }
-
-      event.preventDefault()
-      setActiveSectionId(focusedSectionId)
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [activeSectionId, focusedSectionId])
-
   return (
     <main className="app-shell">
       <KeyboardInputBridge />
+      <SectionKeyboardBridge
+        activeSectionId={activeSectionId}
+        focusedSectionId={focusedSectionId}
+        onOpen={setActiveSectionId}
+        onClose={() => setActiveSectionId(null)}
+      />
       <SceneCanvas>
         <CVScene
           activeSectionId={activeSectionId}

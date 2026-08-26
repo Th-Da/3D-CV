@@ -64,7 +64,7 @@ Architecture ownership:
 * `components/3d/` contains reusable 3D world pieces and interaction targets.
 * `scenes/CVScene/` composes the full 3D city Diorama scene from reusable 3D components.
 * `components/ui/` contains readable 2D panels and navigation UI for CV content.
-* `App.tsx` wires the 3D scene and top-level UI together.
+* `App.tsx` wires scene + UI only: state and mounts. No listeners, key handlers, or interaction logic — those live in `hooks/` or bridge components (same pattern as WASD/arrows).
 * Keep readable CV text in UI components and keep 3D scene components focused on world rendering and interaction.
 
 ---
