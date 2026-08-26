@@ -35,14 +35,23 @@ export const PLOT_RECTS: PlotRect[] = [
   {id: 'education', origin: [3, -8], size: [3, 4]},
   {id: 'skills', origin: [-8, -1], size: [3, 3]},
   {id: 'about', origin: [5, -2], size: [3, 4]},
-  {id: 'projects', origin: [-7, 5], size: [4, 3]},
-  {id: 'contact', origin: [5, 5], size: [3, 3]},
+  {id: 'projects', origin: [-5, 5], size: [4, 3]},
+  {id: 'contact', origin: [2, 5], size: [3, 3]},
 ]
 
 export const PATH_RECTS: BlockRect[] = [
-  {origin: [-3, -8], size: [2, 5]},
-  {origin: [-8, 3], size: [6, 2]},
-  {origin: [2, 3], size: [6, 1]},
-  {origin: [2, -4], size: [2, 7]},
-  {origin: [-1, 6], size: [5, 2]},
+  // to experience
+  {origin: [-3, -8], size: [2, 8]},
+  // in front education
+  {origin: [3, -4], size: [3, 1]},
+  // to education
+  {origin: [2, -4], size: [1, 4]},
+  // to project
+  {origin: [-5, 0], size: [8, 2]},
+  // to skills
+  {origin: [-4, 2], size: [2, 3]},
+  // to contact
+  {origin: [3, 2], size: [1, 3]},
+  // to about
+  {origin: [3, -1], size: [2, 3]},
 ]

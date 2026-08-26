@@ -1,14 +1,10 @@
+import {STATION_COLLIDER_HALF} from '../components/3d/CVStation/stationMetrics'
 import {PLATFORM_SIZE, type DistrictPlot} from '../utils/sceneLayout'
 import type {Axis2} from '../types/input'
 
 export const MOVE_SPEED = 5
 /** Keep the player footprint inside the walkable platform edge. */
 const WALK_LIMIT = PLATFORM_SIZE / 2 - 0.45
-/** Matches the station body in CVStation (`BlockMesh` size [2, 2.2, 2]). */
-const STATION_BODY_HALF = 1
-/** Approx. half-width of the player body so walls feel solid. */
-const PLAYER_RADIUS = 0.35
-const STATION_COLLIDER_HALF = STATION_BODY_HALF + PLAYER_RADIUS
 
 export const MIN_CAMERA_PITCH = 0.25
 export const MAX_CAMERA_PITCH = 1.15
@@ -28,12 +24,15 @@ function clampToPlatform(x: number, z: number): [number, number] {
 }
 
 function collidersFromPlots(plots: DistrictPlot[]): StationCollider[] {
-  return plots.map((plot) => ({
-    minX: plot.position[0] - STATION_COLLIDER_HALF,
-    maxX: plot.position[0] + STATION_COLLIDER_HALF,
-    minZ: plot.position[1] - STATION_COLLIDER_HALF,
-    maxZ: plot.position[1] + STATION_COLLIDER_HALF,
-  }))
+  return plots.map((plot) => {
+    const half = STATION_COLLIDER_HALF[plot.id]
+    return {
+      minX: plot.position[0] - half.x,
+      maxX: plot.position[0] + half.x,
+      minZ: plot.position[1] - half.z,
+      maxZ: plot.position[1] + half.z,
+    }
+  })
 }
 
 function hitsStation(x: number, z: number, colliders: StationCollider[]) {

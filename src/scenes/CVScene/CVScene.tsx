@@ -4,7 +4,7 @@ import {Ground} from '../../components/3d/Environment/Ground'
 import {SceneLighting} from '../../components/3d/Environment/SceneLighting'
 import {PlayerController} from '../../components/3d/Player/PlayerController'
 import type {CvSectionId} from '../../types/cv'
-import {getDistrictPlot} from '../../utils/sceneLayout'
+import {districtPlots} from '../../utils/sceneLayout'
 
 type CVSceneProps = {
   activeSectionId: CvSectionId | null
@@ -19,8 +19,6 @@ export function CVScene({
   onSelectSection,
   onFocusSection,
 }: CVSceneProps) {
-  const aboutPlot = getDistrictPlot('about')
-
   return (
     <>
       <color attach="background" args={['#cfd8e6']} />
@@ -28,15 +26,18 @@ export function CVScene({
       <DioramaBase />
       <Ground />
       <PlayerController
-        plots={[aboutPlot]}
+        plots={districtPlots}
         onFocusChange={onFocusSection}
       />
-      <CVStation
-        plot={aboutPlot}
-        selected={activeSectionId === 'about'}
-        focused={focusedSectionId === 'about'}
-        onSelect={onSelectSection}
-      />
+      {districtPlots.map((plot) => (
+        <CVStation
+          key={plot.id}
+          plot={plot}
+          selected={activeSectionId === plot.id}
+          focused={focusedSectionId === plot.id}
+          onSelect={onSelectSection}
+        />
+      ))}
     </>
   )
 }
