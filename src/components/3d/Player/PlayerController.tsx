@@ -21,10 +21,10 @@ import {BlockMesh} from '../CVStation/BlockMesh'
 
 /** Spawn on the path west of the About station. */
 const SPAWN_XZ: [number, number] = [3, 0]
-/** Matches the previous fixed offset [8, 7, 8] around the player. */
-const CAMERA_RADIUS = Math.hypot(8, 8)
+/** Closer third-person orbit; W/S pitch still lets you pull up and out. */
+const CAMERA_RADIUS = 5.5
 const INITIAL_YAW = Math.PI / 4
-const INITIAL_PITCH = Math.atan2(7, CAMERA_RADIUS)
+const INITIAL_PITCH = 0.36
 const CAMERA_FOLLOW = 8
 const LOOK_AT_Y = 1.2
 
@@ -46,17 +46,29 @@ export function PlayerController({plots, onFocusChange}: PlayerControllerProps) 
       return
     }
 
-    const [dx, dz] = axisToDisplacement(readMoveAxis(), delta)
+    const [dx, dz] = axisToDisplacement(
+      readMoveAxis(),
+      delta,
+      yawRef.current,
+    )
     if (dx !== 0 || dz !== 0) {
+      const prevX = group.position.x
+      const prevZ = group.position.z
       const [nextX, nextZ] = resolveWalkPosition(
-        group.position.x,
-        group.position.z,
-        group.position.x + dx,
-        group.position.z + dz,
+        prevX,
+        prevZ,
+        prevX + dx,
+        prevZ + dz,
         plots,
       )
       group.position.x = nextX
       group.position.z = nextZ
+      const movedX = nextX - prevX
+      const movedZ = nextZ - prevZ
+      // Mesh faces +Z at rotation.y = 0; face the step that actually happened.
+      if (movedX !== 0 || movedZ !== 0) {
+        group.rotation.y = Math.atan2(movedX, movedZ)
+      }
     }
     group.position.y = GROUND_SURFACE_Y
 

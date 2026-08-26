@@ -6,7 +6,7 @@ export function SceneCanvas({children}: PropsWithChildren) {
   return (
     <div className="scene-canvas-shell">
       <Canvas
-        camera={{position: [8, 7, 8], fov: 65}}
+        camera={{position: [6.9, 3.3, 3.9], fov: 65}}
         shadows
         dpr={[1, 2]}
       >

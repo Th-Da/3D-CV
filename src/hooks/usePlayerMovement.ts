@@ -44,7 +44,6 @@ function hitsStation(x: number, z: number, colliders: StationCollider[]) {
 
 /**
  * Clamps to the platform and blocks station building volumes.
- * Tries full move, then X-only / Z-only so the player can slide along walls.
  */
 export function resolveWalkPosition(
   fromX: number,
@@ -73,15 +72,28 @@ export function resolveWalkPosition(
   return [fromX, fromZ]
 }
 
-/** Convert a −1…1 move axis into world XZ displacement for this frame. */
+/**
+ * Convert a −1…1 move axis into world XZ displacement for this frame.
+ * `yaw` is the orbit camera yaw so +y walks into the view and +x walks right
+ * relative to the camera.
+ */
 export function axisToDisplacement(
   axis: Axis2,
   delta: number,
+  yaw: number,
   speed = MOVE_SPEED,
 ): [number, number] {
   if (axis.x === 0 && axis.y === 0) {
     return [0, 0]
   }
-  // +y forward → −Z, +x right → +X
-  return [axis.x * speed * delta, -axis.y * speed * delta]
+  // Camera sits at (sin(yaw), cos(yaw)) from the player; view-forward is opposite.
+  const forwardX = -Math.sin(yaw)
+  const forwardZ = -Math.cos(yaw)
+  const rightX = Math.cos(yaw)
+  const rightZ = -Math.sin(yaw)
+  const step = speed * delta
+  return [
+    (rightX * axis.x + forwardX * axis.y) * step,
+    (rightZ * axis.x + forwardZ * axis.y) * step,
+  ]
 }
