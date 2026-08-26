@@ -15,7 +15,7 @@ export function SkillsWorkshop({accent}: SkillsWorkshopProps) {
   const leaf = '#4f8c36'
 
   return (
-    <group>
+    <group scale={1.05}>
       {/* Stone patio / floor */}
       <BlockMesh position={[0, 0.08, 0.15]} size={[2.4, 0.16, 2.2]} color={stone} />
       {/* Back + side walls (no front wall) */}

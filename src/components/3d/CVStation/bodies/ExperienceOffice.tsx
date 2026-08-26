@@ -17,7 +17,7 @@ export function ExperienceOffice({accent}: ExperienceOfficeProps) {
   const mid = '#8a93a1'
 
   return (
-    <group>
+    <group scale={1.08}>
       {/* Tall vertical core pillar */}
       <BlockMesh position={[0.35, 2.4, 0.15]} size={[0.85, 4.8, 1.1]} color={core} />
       {/* Horizontal grooves on core */}

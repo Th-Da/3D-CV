@@ -32,9 +32,9 @@ export const PLOT_COLORS: Record<CvSectionId, string> = {
 
 export const PLOT_RECTS: PlotRect[] = [
   {id: 'experience', origin: [-8, -8], size: [5, 3]},
-  {id: 'education', origin: [3, -8], size: [3, 4]},
+  {id: 'education', origin: [2, -8], size: [3, 4]},
   {id: 'skills', origin: [-8, -1], size: [3, 3]},
-  {id: 'about', origin: [5, -2], size: [3, 4]},
+  {id: 'about', origin: [5, -1], size: [3, 4]},
   {id: 'projects', origin: [-5, 5], size: [4, 3]},
   {id: 'contact', origin: [2, 5], size: [3, 3]},
 ]
@@ -43,9 +43,9 @@ export const PATH_RECTS: BlockRect[] = [
   // to experience
   {origin: [-3, -8], size: [2, 8]},
   // in front education
-  {origin: [3, -4], size: [3, 1]},
+  {origin: [2, -4], size: [3, 1]},
   // to education
-  {origin: [2, -4], size: [1, 4]},
+  {origin: [1, -4], size: [1, 4]},
   // to project
   {origin: [-5, 0], size: [8, 2]},
   // to skills

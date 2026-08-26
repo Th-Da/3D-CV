@@ -14,7 +14,7 @@ export function AboutHome({accent}: AboutHomeProps) {
   const patio = '#c8c8c8'
 
   return (
-    <group>
+    <group scale={1.15}>
       {/* Ground floor body */}
       <BlockMesh position={[-0.15, 0.85, 0]} size={[1.9, 1.7, 1.7]} color={white} />
       {/* Wide front window + shutters */}

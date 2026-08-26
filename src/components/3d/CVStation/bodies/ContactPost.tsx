@@ -15,7 +15,7 @@ export function ContactPost({accent}: ContactPostProps) {
   const metal = '#5c6370'
 
   return (
-    <group>
+    <group scale={0.8}>
       {/* Small pad under the post (plot accent cue) */}
       <BlockMesh position={[0, 0.06, 0]} size={[1.2, 0.12, 1.0]} color={accent} />
       {/* Post / mast */}
@@ -36,9 +36,6 @@ export function ContactPost({accent}: ContactPostProps) {
       <BlockMesh position={[0, 1.22, 0.44]} size={[0.45, 0.04, 0.04]} color="#888888" />
       {/* Black post horn (blocky silhouette) */}
       <BlockMesh position={[0, 1.95, 0.4]} size={[0.55, 0.12, 0.06]} color={black} />
-      <BlockMesh position={[-0.28, 1.95, 0.4]} size={[0.12, 0.35, 0.06]} color={black} />
-      <BlockMesh position={[0.28, 2.05, 0.4]} size={[0.18, 0.22, 0.06]} color={black} />
-      <BlockMesh position={[0.42, 2.12, 0.4]} size={[0.14, 0.28, 0.06]} color={black} />
       {/* Side detail / lock cue */}
       <BlockMesh position={[0.58, 1.55, 0]} size={[0.08, 0.2, 0.15]} color={black} />
     </group>

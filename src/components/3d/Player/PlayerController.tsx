@@ -101,10 +101,13 @@ export function PlayerController({plots, onFocusChange}: PlayerControllerProps) 
   })
 
   return (
-    <group ref={groupRef} position={[SPAWN_XZ[0], GROUND_SURFACE_Y, SPAWN_XZ[1]]}>
+    <group
+      ref={groupRef}
+      position={[SPAWN_XZ[0], GROUND_SURFACE_Y, SPAWN_XZ[1]]}
+      scale={0.95}
+    >
       <BlockMesh position={[0, 0.55, 0]} size={[0.55, 0.9, 0.35]} color="#3d5a80" />
       <BlockMesh position={[0, 1.15, 0]} size={[0.42, 0.42, 0.42]} color="#e8c4a8" />
-      <BlockMesh position={[0, 0.35, 0.22]} size={[0.35, 0.2, 0.08]} color="#2f4563" />
     </group>
   )
 }
