@@ -1,83 +1,54 @@
-# React + TypeScript + Vite
+# 3D-CV
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive CV as a low-poly city diorama. Recruiters and developers explore
+stations for each résumé section instead of scrolling a static page.
 
-Currently, two official plugins are available:
+**Live demo:** https://th-da.github.io/3D-CV/ ·
+**Repository:** https://github.com/Th-Da/3D-CV
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<!-- TODO: add a screenshot at docs/screenshot.png, then embed:
+![3D-CV city diorama](docs/screenshot.png)
+-->
 
-## React Compiler
+## Why I built this
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+I wanted a CV that people remember, and a project to practice building with an
+AI coding assistant end to end. The hard part is keeping a clear split between
+CV data, 3D world, and 2D UI while the scene stays walkable and readable on
+desktop and touch.
 
-Note: This will impact Vite dev & build performances.
+## Features
 
-## Expanding the ESLint configuration
+- Six CV stations on a walkable district map: About Me, Experience, Education,
+  Skills, Projects, Contact
+- Arrow keys move the avatar; WASD orbits the camera; Enter opens the nearest
+  station; Escape closes the info card
+- Click a station mesh to open its card; on touch, virtual joystick, swipe
+  orbit, and an open prompt when near a station
+- Overlay info card shows title and summary from structured CV data
+- Low-poly environment props (trees, lamps, benches, wayfinder) and fog/lighting
+- Deployed to GitHub Pages from `main` via GitHub Actions
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Vite** — build and local dev server (`base: /3D-CV/` for project Pages)
+- **React 19 + TypeScript** — app shell, UI, and typed CV contracts
+- **Three.js + React Three Fiber** — WebGL scene, stations, player, and camera
+- **React Compiler** — enabled in the Vite Babel preset
+- **ESLint** — lint script for the TypeScript/React tree
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Running it locally
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Requires **Node.js 22** (same version as the deploy workflow).
 
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Other scripts: `npm run build`, `npm run preview`, `npm run lint`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Status
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-## License
-
-Copyright 2026 TD
-
-Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
+Work in progress. The city, controls, and station flow work; CV copy in
+`src/data/cv.ts` is still short placeholder text.
